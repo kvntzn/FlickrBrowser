@@ -7,12 +7,20 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import java.lang.Exception
 
 private const val TAG = "MainActivity"
-class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlickrJsonData.OnDataAvailable {
+class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete
+    , GetFlickrJsonData.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener {
+
+    private val flickrRecyclerViewAdapter = FlickrRecyclerViewAdapter(ArrayList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate called")
@@ -20,11 +28,25 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        recycler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.addOnItemTouchListener(RecyclerItemClickListener(this, recycler_view, this))
+        recycler_view.adapter = flickrRecyclerViewAdapter
+
         val url = createUri("https://api.flickr.com/services/feeds/photos_public.gne","android,oreo","en-us",true)
         val getRawData = GetRawData(this)
         getRawData.execute(url)
 
         Log.d(TAG, "onCreate called")
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        Log.d(TAG,".onItemClick: starts")
+        Toast.makeText(this,"Normal tap at position $position", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onItemLongClick(view: View, position: Int) {
+        Log.d(TAG,".onItemLongClick: starts")
+        Toast.makeText(this,"Long tap at position $position", Toast.LENGTH_SHORT).show()
     }
 
     private fun createUri(baseUrl: String, searchCriteria: String, lang: String, matchAll: Boolean): String{
@@ -74,6 +96,7 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
 
     override fun onDataAvailable(data: List<Photo>) {
         Log.d(TAG, ".onDataAvailable called")
+        flickrRecyclerViewAdapter.loadNewData(data);
         Log.d(TAG, ".onDataAvailable ends")
     }
 
