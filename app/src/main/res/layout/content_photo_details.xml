@@ -23,8 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:fontFamily="casual"
-                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/md_black_1000"
                 tools:text="Empty TextView" />
 
             <ImageView
@@ -42,8 +42,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:fontFamily="casual"
-                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/md_black_1000"
                 tools:text="Empty TextView" />
 
             <TextView
@@ -51,8 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:fontFamily="casual"
-                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/md_black_1000"
                 android:textSize="12sp"
                 tools:text="Empty TextView" />
         </LinearLayout>

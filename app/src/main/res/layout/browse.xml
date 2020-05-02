@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     app:cardCornerRadius="8dp"
-    app:contentPadding="0dp">
+    app:contentPadding="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,25 +15,31 @@
         android:padding="8dp"
         android:weightSum="3">
 
-
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/thumbnail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/browse_image_description"
-            android:scaleType="fitStart"
-            app:srcCompat="@drawable/placeholder" />
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/thumbnail"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:contentDescription="@string/browse_image_description"-->
+        <!--            android:scaleType="fitStart"-->
+        <!--            app:srcCompat="@drawable/placeholder" />-->
 
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_weight="2"
-            android:fontFamily="casual"
-            android:textColor="#FFFFFF"
+            android:fontFamily="@font/adamina"
+            android:textColor="@color/md_black_1000"
             android:textStyle="bold"
             tools:text="Empty TextView" />
 

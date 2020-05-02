@@ -12,6 +12,7 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -31,12 +32,13 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))
         }
         app_bar.addOnOffsetChangedListener(this)
 
         activateToolbar(false)
+
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.addOnItemTouchListener(RecyclerItemClickListener(this, recycler_view, this))
         recycler_view.adapter = flickrRecyclerViewAdapter
@@ -71,7 +73,12 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete
         Toast.makeText(this, ":Long tap at position $position", Toast.LENGTH_SHORT).show()
     }
 
-    private fun createUri(baseUrl: String, searchCriteria: String, lang: String, matchAll: Boolean): String {
+    private fun createUri(
+        baseUrl: String,
+        searchCriteria: String,
+        lang: String,
+        matchAll: Boolean
+    ): String {
         Log.d(TAG, ".createUri starts")
 
         return Uri.parse(baseUrl).buildUpon().appendQueryParameter("tags", searchCriteria)
@@ -113,8 +120,11 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete
     override fun onDownloadComplete(data: String, status: DownloadStatus) {
         if (status == DownloadStatus.OK) {
             Log.d(TAG, "onDownloadComplete called")
+            loader.visibility = View.VISIBLE
+            recycler_view.visibility = View.GONE
             val getFlickrJsonData = GetFlickrJsonData(this)
             getFlickrJsonData.execute(data)
+
         } else {
             Log.d(TAG, "onDownloadCompleted failed with status $status, Error message is: $data")
         }
@@ -122,6 +132,14 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete
 
     override fun onDataAvailable(data: List<Photo>) {
         flickrRecyclerViewAdapter.loadNewData(data);
+
+        val toolbarPhoto = flickrRecyclerViewAdapter.getPhoto(0)
+        Picasso.get().load(toolbarPhoto?.link)
+            .error(R.drawable.placeholder)
+            .into(expandedImage)
+
+        loader.visibility = View.GONE
+        recycler_view.visibility = View.VISIBLE
     }
 
     override fun onError(exception: Exception) {
@@ -147,3 +165,4 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete
         super.onResume()
     }
 }
+

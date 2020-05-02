@@ -3,6 +3,6 @@
 <style name="AppTheme.NoActionBar">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
-    <item name="android:colorBackgroundFloating">@color/primary</item>
+    <item name="android:colorBackgroundFloating">@color/md_white_1000</item>
 </style>
 </resources>

@@ -1,15 +1,14 @@
 package com.heathkev.flickrbrowser
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.util.Log
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
 internal const val FLICKR_QUERY = "FLICKR_QUERY"
 internal const val PHOTO_TRANSFER = "PHOTO_TRANSFER"
+internal const val RECENT_SEARCHES = "RECENT_SEARCHES"
 
 @SuppressLint("Registered")
 open class BaseActivity: AppCompatActivity() {
@@ -20,6 +19,7 @@ open class BaseActivity: AppCompatActivity() {
 
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
+//        supportActionBar?.setDisplayShowTitleEnabled(enableHome)
         supportActionBar?.setDisplayHomeAsUpEnabled(enableHome)
     }
 }
